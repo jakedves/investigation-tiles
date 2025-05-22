@@ -7,10 +7,11 @@
 using namespace tt;
 using namespace tt::tt_metal;
 
-void print_grid(int rows, int elems_per_row, std::vector<uint32_t> v) {
+void print_grid(int rows, int elems_per_row, std::vector<float> v) {
     for (int row_index = 0; row_index < rows; row_index++) {
 	for (int elem = 0; elem < elems_per_row; elem++) {
-		std::cout << v[row_index * elems_per_row + elem] << " ";
+	    float num = v[row_index * elems_per_row + elem];
+	    std::cout << num << " ";
 	}
 	std::cout << "\n";
     }
@@ -22,9 +23,9 @@ int main() {
     constexpr std::int32_t elems = rows * elems_per_row;
 
     // elems, default_value
-    std::vector<std::uint32_t> ones(elems, 1);
-    std::vector<std::uint32_t> twos(elems, 2);
-    std::vector<std::uint32_t> outp(elems, 8); // random value to help spot bugs
+    std::vector<float> ones(elems, 1.0f);
+    std::vector<float> twos(elems, 2.0f);
+    std::vector<float> outp(elems, 8.0f); // random value to help spot bugs
 
     std::cout << "Initialisations:\n";
     print_grid(rows, elems_per_row, ones);
@@ -66,19 +67,19 @@ int main() {
     constexpr uint32_t num_tiles = 1;
     CircularBufferConfig cb_src0_config = CircularBufferConfig(
 	num_tiles * tile_size_bytes,
-	{{0, tt::DataFormat::UInt32}}
+	{{0, tt::DataFormat::Float32}}
     ).set_page_size(0, tile_size_bytes);
     CBHandle cb0 = tt_metal::CreateCircularBuffer(program, core, cb_src0_config);
 
     CircularBufferConfig cb_src1_config = CircularBufferConfig(
 	num_tiles * tile_size_bytes,
-	{{1, tt::DataFormat::UInt32}}
+	{{1, tt::DataFormat::Float32}}
     ).set_page_size(1, tile_size_bytes);
     CBHandle cb1 = tt_metal::CreateCircularBuffer(program, core, cb_src1_config);
 
     CircularBufferConfig cb_dest_config = CircularBufferConfig(
 	num_tiles * tile_size_bytes,
-	{{16, tt::DataFormat::UInt32}}
+	{{16, tt::DataFormat::Float32}}
     ).set_page_size(16, tile_size_bytes);
     CBHandle cbo = tt_metal::CreateCircularBuffer(program, core, cb_dest_config);
 
