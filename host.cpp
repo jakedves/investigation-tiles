@@ -134,7 +134,7 @@ int main() {
     SetRuntimeArgs(program, compute, core, {});
 
     // launch the program, and await completion
-    EnqueueProgram(cq, program, false);
+    EnqueueProgram(cq, program, true);
     Finish(cq);
 
     // gather results from output CB
