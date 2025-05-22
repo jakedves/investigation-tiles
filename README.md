@@ -12,3 +12,7 @@ So far, only changing the data format has made a difference.
 - `Int32` -> zeros
 - `UInt32` -> alternating `20987906 0`
 - `RawUInt32` -> half alternating, then half zeros
+
+Temporary fix:
+
+Just use `float` vectors and `Float32` as the data format. This works.
