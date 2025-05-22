@@ -82,7 +82,6 @@ int main() {
     ).set_page_size(16, tile_size_bytes);
     CBHandle cbo = tt_metal::CreateCircularBuffer(program, core, cb_dest_config);
 
-
     // tell Tenstorrent runtime where to find kernel code
     KernelHandle reader = CreateKernel(
 	program,
