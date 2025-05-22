@@ -1,7 +1,6 @@
 #include <stdint.h>
 #include "dataflow_api.h"
 
-#include "debug/dprint.h"
 
 void kernel_main() {
     uint32_t src0_addr = get_arg_val<uint32_t>(0);
@@ -21,16 +20,10 @@ void kernel_main() {
     cb_reserve_back(0, 1);
     noc_async_read(src0_noc_addr, sram_write_address0, block_size_bytes0);
     noc_async_read_barrier();
-
-    DPRINT << TSLICE(tt::CBIndex::c_0, 0, SliceRange::hw0_32_16()) << ENDL();
-
     cb_push_back(0, 1);
 
     cb_reserve_back(1, 1);
     noc_async_read(src1_noc_addr, sram_write_address1, block_size_bytes1);
     noc_async_read_barrier();
-    
-    DPRINT << TSLICE(tt::CBIndex::c_1, 0, SliceRange::hw0_32_16()) << ENDL();
-    
     cb_push_back(1, 1);
 }
